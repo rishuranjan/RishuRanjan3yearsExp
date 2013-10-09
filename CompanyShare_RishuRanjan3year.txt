@@ -1,0 +1,74 @@
+import os
+import csv
+import string
+import pdb
+
+def getCompanyShareValue(companyName,FileName=None):
+    labels = ["Year","Month"]
+    com_Dict = {}
+    if not FileName or not string.lower(FileName).endswith(".csv"):
+    	print "\n Script needs company detail %s file to read company information"%FileName
+    try :
+        iFile = open(FileName,"rb")
+    except IOError,e:
+        print "\n Script needs company detail %s file to read company information"%FileName
+        return False
+    header1 = csv.reader(iFile)
+    for row in header1:
+        for cols in row:
+            if string.strip(cols) == companyName:
+                labels.append(string.strip(cols))
+                com_Dict[string.strip(cols)]={}
+                break
+        break
+    iFile.close    
+    "Checking if company details are not present in data sheet"
+
+    if not labels.count(companyName):
+        print "\n Company %s details are not present"%companyName
+        return False
+    
+    reader = csv.DictReader(open(FileName),labels,delimiter=',')
+    #pdb.set_trace()
+    for row in reader:
+        if str(row['Year']) !="Year":
+            for key in com_Dict.keys():
+                if str(row['Year']) not in com_Dict[key].keys():    
+                    com_Dict[key][str(row['Year'])] = {str(row['Month']):int(row[key])}
+                else:
+                    com_Dict[key][str(row['Year'])][str(row['Month'])]=int(row[key])
+    
+    #for company in com_Dict.keys():
+        
+    for year in com_Dict[companyName].keys():
+        getMaxMonthShare(companyName,year,com_Dict)        
+        print "=*="*25
+    
+    getMaxYearShare(companyName,com_Dict)
+    print "*=*"*25
+    return True
+
+def getMaxMonthShare(companyName,year,com_Dict):
+    'It will give max share of company for selective year'
+    maxShare = max(com_Dict[companyName][year].values())
+    print "In year %s, max share value of %s was in %s month"%(year,companyName,getKey(maxShare,com_Dict[companyName][year]))
+    #print "company %s has max share in year %s of month %s"%(companyName,year,getKey(maxShare,com_Dict[companyName][year]))
+    
+
+def getMaxYearShare(companyName,com_Dict):
+    'It will give max share of company for yearly'
+    yearDict = {}
+    for key in com_Dict[companyName].keys():
+        yearDict[key] = max(com_Dict[companyName][key].values())
+    #print yearDict
+    maxShare = max(yearDict.values())
+    print "So far, max share of %s was in year %s"%(companyName,getKey(maxShare,yearDict))
+    #print "Company %s has max share in year %s"%(companyName,getKey(maxShare,yearDict))
+    
+def getKey(value,tmpDic):
+    keyFound=None
+    for key in tmpDic.keys():
+        if tmpDic[key] == value:
+            keyFound = key
+            break
+    return keyFound

@@ -1,0 +1,13 @@
+
+D:\pythonTest>unitTest_RishuRanjan3year.py
+In year 1991, max share value of CompanyB was in Jan month
+=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+In year 1990, max share value of CompanyB was in Mar month
+=*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*==*=
+So far, max share of CompanyB was in year 1991
+*=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=**=*
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.013s
+
+OK

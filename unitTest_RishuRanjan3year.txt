@@ -1,0 +1,14 @@
+# Here's our "unit tests".
+import unittest
+
+from CompanyShare_RishuRanjan3year import getCompanyShareValue
+
+class checkCompanyShare(unittest.TestCase):
+
+    def testOne(self):
+        "Get share point of company"
+        self.failUnless(getCompanyShareValue("CompanyA","data.csv"))
+
+    
+if __name__ == '__main__':
+    unittest.main()
